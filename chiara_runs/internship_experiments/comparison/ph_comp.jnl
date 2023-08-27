@@ -1,0 +1,74 @@
+! upload datasets 
+
+
+		use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/ccn_experiments/rcp85/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/ccn_experiments/rcp85-25/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/ccn_experiments/rcp85-50/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/ccn_experiments/rcp85-85/tavg.01955.01.01.nc
+
+		use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/emiss_experiments/rcp85/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/emiss_experiments/rcp85-25/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/emiss_experiments/rcp85-50/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/emiss_experiments/rcp85-85/tavg.01955.01.01.nc
+
+
+! define variables 
+
+
+		let oph_rcp85 = O_phsur[d=1, l=29]
+		let oph_rcp8525 = O_phsur[d=2, l=29]
+		let oph_rcp8550 = O_phsur[d=3, l=29]
+		let oph_rcp8585 = O_phsur[d=4, l=29]
+
+		let oph_cng_25 = oph_rcp85 - oph_rcp8525
+		let oph_cng_50 = oph_rcp85 - oph_rcp8550
+		let oph_cng_85 = oph_rcp85 - oph_rcp8585
+
+		let emis_oph_rcp85 = O_phsur[d=5, l=29]
+		let emis_oph_rcp8525 = O_phsur[d=6, l=29]
+		let emis_oph_rcp8550 = O_phsur[d=7, l=29]
+		let emis_oph_rcp8585 = O_phsur[d=8, l=29]
+
+		let emis_oph_cng_25 = emis_oph_rcp85 - emis_oph_rcp8525
+		let emis_oph_cng_50 = emis_oph_rcp85 - emis_oph_rcp8550
+		let emis_oph_cng_85 = emis_oph_rcp85 - emis_oph_rcp8585
+
+		let comp_25 = oph_cng_25 - emis_oph_cng_25
+		let comp_50 = oph_cng_50 - emis_oph_cng_50
+		let comp_85 = oph_cng_85 - emis_oph_cng_85
+
+
+! set plot routine
+
+
+		set windows/new
+		set text/font='Arial'
+		set text/isiz=4
+		go portrait1x2.jnl
+
+
+		define view/xlimits=0.1,0.85/ylimits=0.6,1 tl
+		define view/xlimits=0.1,0.85/ylimits=0.3,0.7 ml
+		define view/xlimits=0.1,0.85/ylimits=0,0.4 bl
+		
+
+		set view tl
+		shade/nolabel/pal= cmocean_tempo/levels="(-inf)(-0.3e-2,0,2e-04)(inf)" comp_25
+		go land
+		label/nouser 4,3.4,1,0,0.11 "pH - RCPmed"
+		label 0,105,0,0,0.12 "(a)"
+
+		set view ml
+		shade/nolabel/pal= cmocean_tempo/levels="(-inf)(-0.3e-2,0,2e-04)(inf)" comp_50
+		go land
+		label/nouser 4,3.4,1,0,0.11 "pH - RCPlow"
+		label 0,105,0,0,0.12 "(b)"
+
+		set view bl
+		shade/nolabel/pal= cmocean_tempo/levels="(-inf)(-0.3e-2,0,2e-04)(inf)" comp_85
+		go land
+		label/nouser 4,3.4,1,0,0.11 "pH - RCPvl"
+		label 0,105,0,0,0.12 "(c)"
+
+
+frame/file = "/Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/3comparison/comparison_oph.pdf"

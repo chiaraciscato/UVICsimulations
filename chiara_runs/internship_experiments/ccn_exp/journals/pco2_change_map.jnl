@@ -1,0 +1,53 @@
+! upload datasets 
+
+
+		use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/ccn_experiments/rcp85/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/ccn_experiments/rcp85-25/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/ccn_experiments/rcp85-50/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/ccn_experiments/rcp85-85/tavg.01955.01.01.nc
+
+
+! define variables 
+
+
+		let pco2_rcp85 = O_PCO2SUR[d=1, l=30]
+		let pco2_rcp8525 = O_PCO2SUR[d=2, l=30]
+		let pco2_rcp8550 = O_PCO2SUR[d=3, l=30]
+		let pco2_rcp8585 = O_PCO2SUR[d=4, l=30]
+
+		let pco2_cng_25 = pco2_rcp85 - pco2_rcp8525
+		let pco2_cng_50 = pco2_rcp85 - pco2_rcp8550
+		let pco2_cng_85 = pco2_rcp85 - pco2_rcp8585
+
+
+! set plot routine
+
+
+		set windows/new
+		set text/font='Arial'
+		set text/isiz=4
+		go portrait1x2.jnl
+
+
+		define view/xlimits=0.07,0.9/ylimits=0.6,1 tl
+		define view/xlimits=0.07,0.9/ylimits=0.3,0.7 ml
+		define view/xlimits=0.07,0.9/ylimits=0,0.4 bl
+		
+
+		set view tl
+		shade/nolabel/levels="(-inf)(300,1000,50)(inf)" pco2_rcp8525
+		go land
+		label/nouser 5.5,3.4,1,0,0.11 "RCP8.5 - 25% Ocean <#916>pCO<sub>2</sub> [ppm]"
+
+		set view ml
+		shade/nolabel/levels="(-inf)(300,1000,50)(inf)" pco2_rcp8550
+		go land
+		label/nouser 5.5,3.4,1,0,0.11 "RCP8.5 - 50% Ocean <#916>pCO<sub>2</sub> [ppm]"
+
+		set view bl
+		shade/nolabel/levels="(-inf)(300,1000,50)(inf)" pco2_rcp8585
+		go land
+		label/nouser 5.5,3.4,1,0,0.11 "RCP8.5 - 85% Ocean <#916>pCO<sub>2</sub> [ppm]"
+
+
+frame/file = "/Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/ccn_experiments/figures/opco2_cng_emis.pdf"

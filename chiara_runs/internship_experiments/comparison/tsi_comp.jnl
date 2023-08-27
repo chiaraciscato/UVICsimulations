@@ -1,0 +1,213 @@
+! upload datasets
+
+	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/ccn_experiments/rcp85/tsi.01951.01.01.nc			! RCP 8.5
+	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/ccn_experiments/rcp85-25/tsi.01951.01.01.nc  			! RCP 8.5 - 25%
+	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/ccn_experiments/rcp85-50/tsi.01951.01.01.nc 			! RCP 8.5 - 50%
+	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/ccn_experiments/rcp85-85/tsi.01951.01.01.nc			! RCO 8.5 - 85%
+
+	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/emiss_experiments/rcp85/tsi.01951.01.01.nc			! RCP 8.5
+	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/emiss_experiments/rcp85-25/tsi.01951.01.01.nc  			! RCP 8.5 - 25%
+	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/emiss_experiments/rcp85-50/tsi.01951.01.01.nc 			! RCP 8.5 - 50%
+	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/emiss_experiments/rcp85-85/tsi.01951.01.01.nc			! RCO 8.5 - 85%
+
+
+! assign variables
+
+! sea surface temperature
+
+	let otemp_rcp85 = O_TEMPSUR[d=1, l=0:149]
+	let otemp_rcp8525 = O_TEMPSUR[d=2, l=0:149]
+	let otemp_rcp8550 = O_TEMPSUR[d=3, l=0:149]
+	let otemp_rcp8585 = O_TEMPSUR[d=4, l=0:149]
+
+	let otemp_25 = otemp_rcp85 - otemp_rcp8525
+	let otemp_50 = otemp_rcp85 - otemp_rcp8550
+	let otemp_85 = otemp_rcp85 - otemp_rcp8585
+
+	let emis_otemp_rcp85 = O_TEMPSUR[d=5, l=0:149]
+	let emis_otemp_rcp8525 = O_TEMPSUR[d=6, l=0:149]
+	let emis_otemp_rcp8550 = O_TEMPSUR[d=7, l=0:149]
+	let emis_otemp_rcp8585 = O_TEMPSUR[d=8, l=0:149]
+
+	let emis_otemp_25 = emis_otemp_rcp85 - emis_otemp_rcp8525
+	let emis_otemp_50 = emis_otemp_rcp85 - emis_otemp_rcp8550
+	let emis_otemp_85 = emis_otemp_rcp85 - emis_otemp_rcp8585
+
+	let cng_otemp_25 = otemp_25 - emis_otemp_25
+	let cng_otemp_50 = otemp_50 - emis_otemp_50
+	let cng_otemp_85 = otemp_85 - emis_otemp_85
+
+! ocean pco2
+
+	let opco2_rcp85 = O_PCO2SUR[d=1, l=0:149]
+	let opco2_rcp8525 = O_PCO2SUR[d=2, l=0:149]
+	let opco2_rcp8550 = O_PCO2SUR[d=3, l=0:149]
+	let opco2_rcp8585 = O_PCO2SUR[d=4, l=0:149]
+
+	let opco2_25 = opco2_rcp85 - opco2_rcp8525
+	let opco2_50 = opco2_rcp85 - opco2_rcp8550
+	let opco2_85 = opco2_rcp85 - opco2_rcp8585	
+
+	let emis_opco2_rcp85 = O_PCO2SUR[d=5, l=0:149]
+	let emis_opco2_rcp8525 = O_PCO2SUR[d=6, l=0:149]
+	let emis_opco2_rcp8550 = O_PCO2SUR[d=7, l=0:149]
+	let emis_opco2_rcp8585 = O_PCO2SUR[d=8, l=0:149]
+
+	let emis_opco2_25 = emis_opco2_rcp85 - emis_opco2_rcp8525
+	let emis_opco2_50 = emis_opco2_rcp85 - emis_opco2_rcp8550
+	let emis_opco2_85 = emis_opco2_rcp85 - emis_opco2_rcp8585
+
+	let cng_pco2_25 = opco2_25 - emis_opco2_25
+	let cng_pco2_50 = opco2_50 - emis_opco2_50
+	let cng_pco2_85 = opco2_85 - emis_opco2_85
+
+! air carbon
+
+	let acarb_rcp85 = A_TOTCARB[d=1, l=0:149]
+	let acarb_rcp8525 = A_TOTCARB[d=2, l=0:149]
+	let acarb_rcp8550 = A_TOTCARB[d=3, l=0:149]
+	let acarb_rcp8585 = A_TOTCARB[d=4, l=0:149]
+
+	let acarb_25 = acarb_rcp85 - acarb_rcp8525
+	let acarb_50 = acarb_rcp85 - acarb_rcp8550
+	let acarb_85 = acarb_rcp85 - acarb_rcp8585
+
+	let emis_acarb_rcp85 = A_TOTCARB[d=5, l=0:149]
+	let emis_acarb_rcp8525 = A_TOTCARB[d=6, l=0:149]
+	let emis_acarb_rcp8550 = A_TOTCARB[d=7, l=0:149]
+	let emis_acarb_rcp8585 = A_TOTCARB[d=8, l=0:149]
+
+	let emis_acarb_25 = emis_acarb_rcp85 - emis_acarb_rcp8525
+	let emis_acarb_50 = emis_acarb_rcp85 - emis_acarb_rcp8550
+	let emis_acarb_85 = emis_acarb_rcp85 - emis_acarb_rcp8585
+
+
+	let cng_acarb_25 = acarb_25 - emis_acarb_25
+	let cng_acarb_50 = acarb_50 - emis_acarb_50
+	let cng_acarb_85 = acarb_85 - emis_acarb_85
+
+! ocean carbon
+
+	let ocarb_rcp85 = O_TOTCARB[d=1, l=0:149]
+	let ocarb_rcp8525 = O_TOTCARB[d=2, l=0:149]
+	let ocarb_rcp8550 = O_TOTCARB[d=3, l=0:149]
+	let ocarb_rcp8585 = O_TOTCARB[d=4, l=0:149]
+
+	let ocarb_25 = ocarb_rcp85 - ocarb_rcp8525
+	let ocarb_50 = ocarb_rcp85 - ocarb_rcp8550
+	let ocarb_85 = ocarb_rcp85 - ocarb_rcp8585	
+
+	let emis_ocarb_rcp85 = O_TOTCARB[d=5, l=0:149]
+	let emis_ocarb_rcp8525 = O_TOTCARB[d=6, l=0:149]
+	let emis_ocarb_rcp8550 = O_TOTCARB[d=7, l=0:149]
+	let emis_ocarb_rcp8585 = O_TOTCARB[d=8, l=0:149]
+
+	let emis_ocarb_25 = emis_ocarb_rcp85 - emis_ocarb_rcp8525
+	let emis_ocarb_50 = emis_ocarb_rcp85 - emis_ocarb_rcp8550
+	let emis_ocarb_85 = emis_ocarb_rcp85 - emis_ocarb_rcp8585
+
+	let cng_ocarb_25 = ocarb_25 - emis_ocarb_25
+	let cng_ocarb_50 = ocarb_50 - emis_ocarb_50
+	let cng_ocarb_85 = ocarb_85 - emis_ocarb_85
+
+
+! plot routine
+
+
+	cancel windows/all
+	set windows/new
+	set text/font='Arial'
+	set text/isiz=4
+	go landscape2x2.jnl
+
+	define view/xlimits=0.01,0.51/ylimits=0.5,1 ul
+	define view/xlimits=0.49,0.99/ylimits=0.5,1 ur
+	define view/xlimits=0.01,0.51/ylimits=0,0.5 ll
+	define view/xlimits=0.49,0.99/ylimits=0,0.5 lr
+
+! plot figure
+
+	set view ul
+	plot/nolabel/color=(100,68,0)/vlimits=0:5:0.5/hlimits=1950:2101:20/thick=2 cng_pco2_25
+	plot/nolabel/overlay/color=green/thick=2 cng_pco2_50
+	plot/nolabel/overlay/color=lightblue/thick=2 cng_pco2_85
+
+	label/nouser 2.6,4.1,0,0,0.13 "Ocean pCO<sub>2</sub> [ppm]"
+	label/nouser 2.8,-0.7,4,0,0.11 "[year]"
+	label 100000,4.5,0,0,0.15 "(a)"
+	
+	set text/font='Arial'/color=(100,68,0)
+	label/nouser 0.2,2.4,-1,0,0.11 - RCPmed
+	
+	set text/font='Arial'/color=green
+	label/nouser 0.2,2.1,-1,0,0.11 - RCPlow
+	
+	set text/font='Arial'/color= lightblue
+	label/nouser 0.2,1.8,-1,0,0.11 - RCPvl
+	
+	set text/font='Arial'/color=black
+
+	set view ur
+	plot/nolabel/color=(100,68,0)/vlimits=0:0.05:0.01/hlimits=1950:2101:20/thick=2 cng_otemp_25
+	plot/nolabel/overlay/color=green/thick=2 cng_otemp_50
+	plot/nolabel/overlay/color=lightblue/thick=2 cng_otemp_85
+
+	label/nouser 2.6,4.1,0,0,0.13 "Sea surface temperature [°C]"
+	label/nouser 2.8,-0.7,4,0,0.11 "[year]"
+	label 100000,0.045,0,0,0.15 "(b)"
+	
+	set text/font='Arial'/color=(100,68,0)
+	label/nouser 0.2,2.4,-1,0,0.11 - RCPmed
+	
+	set text/font='Arial'/color=green
+	label/nouser 0.2,2.1,-1,0,0.11 - RCPlow
+	
+	set text/font='Arial'/color= lightblue
+	label/nouser 0.2,1.8,-1,0,0.11 - RCP 8.5vl
+	
+	set text/font='Arial'/color=black
+
+	set view ll
+	plot/nolabel/color=(100,68,0)/vlimits=0:10.5:1/hlimits=1950:2101:20/thick=2 cng_acarb_25
+	plot/nolabel/overlay/color=green/thick=2 cng_acarb_50
+	plot/nolabel/overlay/color=lightblue/thick=2 cng_acarb_85
+
+	label/nouser 2.6,4.1,0,0,0.13 "Air carbon [Pg]"
+	label/nouser 2.8,-0.7,4,0,0.11 "[year]"
+	label 100000,9.3,0,0,0.15 "(c)"
+	
+	set text/font='Arial'/color=(100,68,0)
+	label/nouser 0.2,2.4,-1,0,0.11 - RCPmed
+	
+	set text/font='Arial'/color=green
+	label/nouser 0.2,2.1,-1,0,0.11 - RCPlow
+	
+	set text/font='Arial'/color= lightblue
+	label/nouser 0.2,1.8,-1,0,0.11 - RCP 8.5vl
+	
+	set text/font='Arial'/color=black
+
+	set view lr
+	plot/nolabel/color=(100,68,0)/vlimits=0:10.5:1/hlimits=1950:2101:20/thick=2 cng_ocarb_25
+	plot/nolabel/overlay/color=green/thick=2 cng_ocarb_50
+	plot/nolabel/overlay/color=lightblue/thick=2 cng_ocarb_85
+
+	label/nouser 2.6,4.1,0,0,0.13 "Ocean carbon [Pg]"
+	label/nouser 2.8,-0.7,4,0,0.11 "[year]"
+	label 100000,9.3,0,0,0.15 "(d)"
+	
+	set text/font='Arial'/color=(100,68,0)
+	label/nouser 0.2,2.4,-1,0,0.11 - RCPmed
+	
+	set text/font='Arial'/color=green
+	label/nouser 0.2,2.1,-1,0,0.11 - RCPlow
+	
+	set text/font='Arial'/color= lightblue
+	label/nouser 0.2,1.8,-1,0,0.11 - RCP 8.5vl
+	
+	set text/font='Arial'/color=black
+
+! save figure
+
+
+	frame/file = "/Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/3comparison/tsi_comp.pdf"

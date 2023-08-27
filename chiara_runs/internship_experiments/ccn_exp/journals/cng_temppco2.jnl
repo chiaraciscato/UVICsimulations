@@ -1,0 +1,85 @@
+! upload datasets
+
+
+	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/ccn_experiments/rcp85/tsi.01951.01.01.nc			! RCP 8.5
+	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/ccn_experiments/rcp85-25/tsi.01951.01.01.nc  			! RCP 8.5 - 25%
+	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/ccn_experiments/rcp85-50/tsi.01951.01.01.nc 			! RCP 8.5 - 50%
+	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/ccn_experiments/rcp85-85/tsi.01951.01.01.nc			! RCO 8.5 - 85%
+
+
+! assign variables
+
+	let otemp_rcp85 = O_TEMPSUR[d=1]
+	let otemp_rcp8525 = O_TEMPSUR[d=2]
+	let otemp_rcp8550 = O_TEMPSUR[d=3]
+	let otemp_rcp8585 = O_TEMPSUR[d=4]
+
+	let otemp_25 = otemp_rcp85 - otemp_rcp8525
+	let otemp_50 = otemp_rcp85 - otemp_rcp8550
+	let otemp_85 = otemp_rcp85 - otemp_rcp8585
+
+	let opco2_rcp85 = O_PCO2SUR[d=1]
+	let opco2_rcp8525 = O_PCO2SUR[d=2]
+	let opco2_rcp8550 = O_PCO2SUR[d=3]
+	let opco2_rcp8585 = O_PCO2SUR[d=4]
+
+	let opco2_25 = opco2_rcp85 - opco2_rcp8525
+	let opco2_50 = opco2_rcp85 - opco2_rcp8550
+	let opco2_85 = opco2_rcp85 - opco2_rcp8585
+
+! plot routine
+
+
+	cancel windows/all
+	set windows/new
+	set text/font='Arial'
+	set text/isiz=4
+	go landscape2x2.jnl
+
+	define view/xlimits=0.09,0.54/ylimits=0.5,1 l
+	define view/xlimits=0.54,0.99/ylimits=0.5,1 r
+
+! plot figure
+
+	set view l
+	plot/nolabel/color=(100,68,0)/vlimits=0:1:0.25/hlimits=1950:2101:20/thick=2 otemp_25
+	plot/nolabel/overlay/color=green/thick=2 otemp_50
+	plot/nolabel/overlay/color=lightblue/thick=2 otemp_85
+
+	label/nouser -1.2,1.8,0,90,0.11 "Sea surface temperature [C]"
+	label/nouser 2.5,-0.8,4,0,0.11 "[year]"
+	
+	set text/font='Arial'/color=(100,68,0)
+	label/nouser 0.2,2.7,-1,0,0.11 - RCP 8.5 - 25%
+	
+	set text/font='Arial'/color=green
+	label/nouser 0.2,2.4,-1,0,0.11 - RCP 8.5 - 50%
+	
+	set text/font='Arial'/color= lightblue
+	label/nouser 0.2,2.1,-1,0,0.11 - RCP 8.5 - 85%
+	
+	set text/font='Arial'/color=black
+
+	set view r
+	plot/nolabel/color=(100,68,0)/vlimits=0:300:50/hlimits=1950:2101:20/thick=2 opco2_25
+	plot/nolabel/overlay/color=green/thick=2 opco2_50
+	plot/nolabel/overlay/color=lightblue/thick=2 opco2_85
+
+	label/nouser -1.2,1.8,0,90,0.11 "Ocean pCO<sub>2</sub> [ppm]"
+	label/nouser 2.5,-0.8,4,0,0.11 "[year]"
+	
+	set text/font='Arial'/color=(100,68,0)
+	label/nouser 0.2,2.7,-1,0,0.11 - RCP 8.5 - 25%
+	
+	set text/font='Arial'/color=green
+	label/nouser 0.2,2.4,-1,0,0.11 - RCP 8.5 - 50%
+	
+	set text/font='Arial'/color= lightblue
+	label/nouser 0.2,2.1,-1,0,0.11 - RCP 8.5 - 85%
+	
+	set text/font='Arial'/color=black
+
+! save figure
+
+
+	frame/file = "/Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/ccn_experiments/figures/base_temppco2.pdf"
