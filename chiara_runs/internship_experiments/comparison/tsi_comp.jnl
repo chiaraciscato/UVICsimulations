@@ -1,14 +1,14 @@
 ! upload datasets
 
-	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/ccn_experiments/rcp85/tsi.01951.01.01.nc			! RCP 8.5
-	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/ccn_experiments/rcp85-25/tsi.01951.01.01.nc  			! RCP 8.5 - 25%
-	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/ccn_experiments/rcp85-50/tsi.01951.01.01.nc 			! RCP 8.5 - 50%
-	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/ccn_experiments/rcp85-85/tsi.01951.01.01.nc			! RCO 8.5 - 85%
+	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_experiments/internship/ccn_exp/rcp85/tsi.01951.01.01.nc			! RCP 8.5
+	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_experiments/internship/ccn_exp/rcp85-25/tsi.01951.01.01.nc  			! RCP 8.5 - 25%
+	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_experiments/internship/ccn_exp/rcp85-50/tsi.01951.01.01.nc 			! RCP 8.5 - 50%
+	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_experiments/internship/ccn_exp/rcp85-85/tsi.01951.01.01.nc			! RCO 8.5 - 85%
 
-	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/emiss_experiments/rcp85/tsi.01951.01.01.nc			! RCP 8.5
-	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/emiss_experiments/rcp85-25/tsi.01951.01.01.nc  			! RCP 8.5 - 25%
-	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/emiss_experiments/rcp85-50/tsi.01951.01.01.nc 			! RCP 8.5 - 50%
-	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/emiss_experiments/rcp85-85/tsi.01951.01.01.nc			! RCO 8.5 - 85%
+	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_experiments/internship/emis_exp/rcp85/tsi.01951.01.01.nc			! RCP 8.5
+	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_experiments/internship/emis_exp/rcp85-25/tsi.01951.01.01.nc  			! RCP 8.5 - 25%
+	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_experiments/internship/emis_exp/rcp85-50/tsi.01951.01.01.nc 			! RCP 8.5 - 50%
+	use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_experiments/internship/emis_exp/rcp85-85/tsi.01951.01.01.nc			! RCO 8.5 - 85%
 
 
 ! assign variables
@@ -111,6 +111,56 @@
 	let cng_ocarb_85 = ocarb_85 - emis_ocarb_85
 
 
+! land flux
+
+	let lflux_rcp85 = F_carba2l[d=1, l=0:149]
+	let lflux_rcp8525 = F_carba2l[d=2, l=0:149]
+	let lflux_rcp8550 = F_carba2l[d=3, l=0:149]
+	let lflux_rcp8585 = F_carba2l[d=4, l=0:149]
+
+	let lflux_25 = lflux_rcp85 - lflux_rcp8525
+	let lflux_50 = lflux_rcp85 - lflux_rcp8550
+	let lflux_85 = lflux_rcp85 - lflux_rcp8585
+
+	let emis_lflux_rcp85 = F_carba2l[d=5, l=0:149]
+	let emis_lflux_rcp8525 = F_carba2l[d=6, l=0:149]
+	let emis_lflux_rcp8550 = F_carba2l[d=7, l=0:149]
+	let emis_lflux_rcp8585 = F_carba2l[d=8, l=0:149]
+
+	let emis_lflux_25 = emis_lflux_rcp85 - emis_lflux_rcp8525
+	let emis_lflux_50 = emis_lflux_rcp85 - emis_lflux_rcp8550
+	let emis_lflux_85 = emis_lflux_rcp85 - emis_lflux_rcp8585
+
+
+	let cng_lflux_25 = lflux_25 - emis_lflux_25
+	let cng_lflux_50 = lflux_50 - emis_lflux_50
+	let cng_lflux_85 = lflux_85 - emis_lflux_85
+
+! ocean flux
+
+	let oflux_rcp85 = F_carba2o[d=1, l=0:149]
+	let oflux_rcp8525 = F_carba2o[d=2, l=0:149]
+	let oflux_rcp8550 = F_carba2o[d=3, l=0:149]
+	let oflux_rcp8585 = F_carba2o[d=4, l=0:149]
+
+	let oflux_25 = oflux_rcp85 - oflux_rcp8525
+	let oflux_50 = oflux_rcp85 - oflux_rcp8550
+	let oflux_85 = oflux_rcp85 - oflux_rcp8585	
+
+	let emis_oflux_rcp85 = F_carba2o[d=5, l=0:149]
+	let emis_oflux_rcp8525 = F_carba2o[d=6, l=0:149]
+	let emis_oflux_rcp8550 = F_carba2o[d=7, l=0:149]
+	let emis_oflux_rcp8585 = F_carba2o[d=8, l=0:149]
+
+	let emis_oflux_25 = emis_oflux_rcp85 - emis_oflux_rcp8525
+	let emis_oflux_50 = emis_oflux_rcp85 - emis_oflux_rcp8550
+	let emis_oflux_85 = emis_oflux_rcp85 - emis_oflux_rcp8585
+
+	let cng_oflux_25 = oflux_25 - emis_oflux_25
+	let cng_oflux_50 = oflux_50 - emis_oflux_50
+	let cng_oflux_85 = oflux_85 - emis_oflux_85
+
+
 ! plot routine
 
 
@@ -118,96 +168,143 @@
 	set windows/new
 	set text/font='Arial'
 	set text/isiz=4
-	go landscape2x2.jnl
+	go portrait1x2.jnl
 
-	define view/xlimits=0.01,0.51/ylimits=0.5,1 ul
-	define view/xlimits=0.49,0.99/ylimits=0.5,1 ur
-	define view/xlimits=0.01,0.51/ylimits=0,0.5 ll
-	define view/xlimits=0.49,0.99/ylimits=0,0.5 lr
+	define view/xlimits=0.01,0.51/ylimits=0.64,0.98 ul
+	define view/xlimits=0.49,0.99/ylimits=0.64,0.98 ur
+	define view/xlimits=0.01,0.51/ylimits=0.32,0.66 ml
+	define view/xlimits=0.49,0.99/ylimits=0.32,0.66 mr
+	define view/xlimits=0.01,0.51/ylimits=0,0.34 ll
+	define view/xlimits=0.49,0.99/ylimits=0,0.34 lr
 
 ! plot figure
 
 	set view ul
 	plot/nolabel/color=(100,68,0)/vlimits=0:5:0.5/hlimits=1950:2101:20/thick=2 cng_pco2_25
-	plot/nolabel/overlay/color=green/thick=2 cng_pco2_50
-	plot/nolabel/overlay/color=lightblue/thick=2 cng_pco2_85
+	plot/nolabel/overlay/color=(35,92,45)/thick=2 cng_pco2_50
+	plot/nolabel/overlay/color=(22,97,97)/thick=2 cng_pco2_85
 
-	label/nouser 2.6,4.1,0,0,0.13 "Ocean pCO<sub>2</sub> [ppm]"
-	label/nouser 2.8,-0.7,4,0,0.11 "[year]"
-	label 100000,4.5,0,0,0.15 "(a)"
+	label/nouser 2.2,3.4,0,0,0.11 "Ocean pCO<sub>2</sub> [ppm]"
+	label/nouser 2.5,-0.7,4,0,0.11 "[year]"
+	label 100000,4.5,0,0,0.12 "(a)"
 	
 	set text/font='Arial'/color=(100,68,0)
-	label/nouser 0.2,2.4,-1,0,0.11 - RCPmed
+	label/nouser 0.2,2.1,-1,0,0.11 - RCPmed
 	
-	set text/font='Arial'/color=green
-	label/nouser 0.2,2.1,-1,0,0.11 - RCPlow
+	set text/font='Arial'/color=(35,92,45)
+	label/nouser 0.2,1.8,-1,0,0.11 - RCPlow
 	
-	set text/font='Arial'/color= lightblue
-	label/nouser 0.2,1.8,-1,0,0.11 - RCPvl
+	set text/font='Arial'/color= (22,97,97)
+	label/nouser 0.2,1.5,-1,0,0.11 - RCPvl
 	
 	set text/font='Arial'/color=black
 
 	set view ur
 	plot/nolabel/color=(100,68,0)/vlimits=0:0.05:0.01/hlimits=1950:2101:20/thick=2 cng_otemp_25
-	plot/nolabel/overlay/color=green/thick=2 cng_otemp_50
-	plot/nolabel/overlay/color=lightblue/thick=2 cng_otemp_85
+	plot/nolabel/overlay/color=(35,92,45)/thick=2 cng_otemp_50
+	plot/nolabel/overlay/color=(22,97,97)/thick=2 cng_otemp_85
 
-	label/nouser 2.6,4.1,0,0,0.13 "Sea surface temperature [°C]"
-	label/nouser 2.8,-0.7,4,0,0.11 "[year]"
-	label 100000,0.045,0,0,0.15 "(b)"
+	label/nouser 2.2,3.4,0,0,0.11 "Sea surface temperature [°C]"
+	label/nouser 2.5,-0.7,4,0,0.11 "[year]"
+	label 100000,0.045,0,0,0.12 "(b)"
 	
 	set text/font='Arial'/color=(100,68,0)
-	label/nouser 0.2,2.4,-1,0,0.11 - RCPmed
+	label/nouser 0.2,2.1,-1,0,0.11 - RCPmed
 	
-	set text/font='Arial'/color=green
-	label/nouser 0.2,2.1,-1,0,0.11 - RCPlow
+	set text/font='Arial'/color=(35,92,45)
+	label/nouser 0.2,1.8,-1,0,0.11 - RCPlow
 	
-	set text/font='Arial'/color= lightblue
-	label/nouser 0.2,1.8,-1,0,0.11 - RCP 8.5vl
+	set text/font='Arial'/color= (22,97,97)
+	label/nouser 0.2,1.5,-1,0,0.11 - RCPvl
+	
+	set text/font='Arial'/color=black
+
+	set view ml
+	plot/nolabel/color=(100,68,0)/vlimits=0:10.5:1/hlimits=1950:2101:20/thick=2 cng_acarb_25
+	plot/nolabel/overlay/color=(35,92,45)/thick=2 cng_acarb_50
+	plot/nolabel/overlay/color=(22,97,97)/thick=2 cng_acarb_85
+
+	label/nouser 2.2,3.4,0,0,0.11 "Air carbon [Pg]"
+	label/nouser 2.5,-0.7,4,0,0.11 "[year]"
+	label 100000,9.3,0,0,0.12 "(c)"
+	
+	set text/font='Arial'/color=(100,68,0)
+	label/nouser 0.2,2.1,-1,0,0.11 - RCPmed
+	
+	set text/font='Arial'/color=(35,92,45)
+	label/nouser 0.2,1.8,-1,0,0.11 - RCPlow
+	
+	set text/font='Arial'/color= (22,97,97)
+	label/nouser 0.2,1.5,-1,0,0.11 - RCPvl
+	
+	set text/font='Arial'/color=black
+
+	set view mr
+	plot/nolabel/color=(100,68,0)/vlimits=0:10.5:1/hlimits=1950:2101:20/thick=2 cng_ocarb_25
+	plot/nolabel/overlay/color=(35,92,45)/thick=2 cng_ocarb_50
+	plot/nolabel/overlay/color=(22,97,97)/thick=2 cng_ocarb_85
+
+	label/nouser 2.2,3.4,0,0,0.11 "Ocean carbon [Pg]"
+	label/nouser 2.5,-0.7,4,0,0.11 "[year]"
+	label 100000,9.3,0,0,0.12 "(d)"
+	
+	set text/font='Arial'/color=(100,68,0)
+	label/nouser 0.2,2.1,-1,0,0.11 - RCPmed
+	
+	set text/font='Arial'/color=(35,92,45)
+	label/nouser 0.2,1.8,-1,0,0.11 - RCPlow
+	
+	set text/font='Arial'/color= (22,97,97)
+	label/nouser 0.2,1.5,-1,0,0.11 - RCPvl
 	
 	set text/font='Arial'/color=black
 
 	set view ll
-	plot/nolabel/color=(100,68,0)/vlimits=0:10.5:1/hlimits=1950:2101:20/thick=2 cng_acarb_25
-	plot/nolabel/overlay/color=green/thick=2 cng_acarb_50
-	plot/nolabel/overlay/color=lightblue/thick=2 cng_acarb_85
+	plot/nolabel/color=(100,68,0)/vlimits=0:0.1:0.02/hlimits=1950:2101:20/thick=2 cng_lflux_25
+	plot/nolabel/overlay/color=(35,92,45)/thick=2 cng_lflux_50
+	plot/nolabel/overlay/color=(22,97,97)/thick=2 cng_lflux_85
 
-	label/nouser 2.6,4.1,0,0,0.13 "Air carbon [Pg]"
-	label/nouser 2.8,-0.7,4,0,0.11 "[year]"
-	label 100000,9.3,0,0,0.15 "(c)"
+	label/nouser 2.2,3.4,0,0,0.11 "Atmosphere-to-land carbon flux [Pg yr <sup>-1</sup>]"
+	label/nouser 2.5,-0.7,4,0,0.11 "[year]"
+	label 100000,0.088,0,0,0.12 "(a)"
 	
 	set text/font='Arial'/color=(100,68,0)
-	label/nouser 0.2,2.4,-1,0,0.11 - RCPmed
+	label/nouser 0.2,2.1,-1,0,0.11 - RCPmed
 	
-	set text/font='Arial'/color=green
-	label/nouser 0.2,2.1,-1,0,0.11 - RCPlow
+	set text/font='Arial'/color=(35,92,45)
+	label/nouser 0.2,1.8,-1,0,0.11 - RCPlow
 	
-	set text/font='Arial'/color= lightblue
-	label/nouser 0.2,1.8,-1,0,0.11 - RCP 8.5vl
+	set text/font='Arial'/color= (22,97,97)
+	label/nouser 0.2,1.5,-1,0,0.11 - RCPvl
 	
 	set text/font='Arial'/color=black
 
 	set view lr
-	plot/nolabel/color=(100,68,0)/vlimits=0:10.5:1/hlimits=1950:2101:20/thick=2 cng_ocarb_25
-	plot/nolabel/overlay/color=green/thick=2 cng_ocarb_50
-	plot/nolabel/overlay/color=lightblue/thick=2 cng_ocarb_85
+	plot/nolabel/color=(100,68,0)/vlimits=0:0.1:0.02/hlimits=1950:2101:20/thick=2 cng_oflux_25
+	plot/nolabel/overlay/color=(35,92,45)/thick=2 cng_oflux_50
+	plot/nolabel/overlay/color=(22,97,97)/thick=2 cng_oflux_85
+	ppl axlsze 0.12, 0.12
+	ppl txlsze 0.12, 0.12
 
-	label/nouser 2.6,4.1,0,0,0.13 "Ocean carbon [Pg]"
-	label/nouser 2.8,-0.7,4,0,0.11 "[year]"
-	label 100000,9.3,0,0,0.15 "(d)"
+	label/nouser 2.2,3.4,0,0,0.11 "Atmosphere-to-ocean carbon flux [Pg yr <sup>-1</sup>]"
+	label/nouser 2.5,-0.7,4,0,0.11 "[year]"
+	label 100000,0.088,0,0,0.12 "(b)"
 	
 	set text/font='Arial'/color=(100,68,0)
-	label/nouser 0.2,2.4,-1,0,0.11 - RCPmed
+	label/nouser 0.2,2.1,-1,0,0.11 - RCPmed
 	
-	set text/font='Arial'/color=green
-	label/nouser 0.2,2.1,-1,0,0.11 - RCPlow
+	set text/font='Arial'/color=(35,92,45)
+	label/nouser 0.2,1.8,-1,0,0.11 - RCPlow
 	
-	set text/font='Arial'/color= lightblue
-	label/nouser 0.2,1.8,-1,0,0.11 - RCP 8.5vl
+	set text/font='Arial'/color= (22,97,97)
+	label/nouser 0.2,1.5,-1,0,0.11 - RCPvl
 	
 	set text/font='Arial'/color=black
 
 ! save figure
 
 
-	frame/file = "/Users/chiaraciscato/Desktop/geomar/UVic/chiara_runs/internship_experiments/3comparison/tsi_comp.pdf"
+	frame/file = "/Users/chiaraciscato/Desktop/geomar/UVic/chiara_experiments/UVICsimulations/chiara_runs/internship_experiments/comparison/tsi_comp.pdf"
+
+cancel windows/all
+cancel data/all

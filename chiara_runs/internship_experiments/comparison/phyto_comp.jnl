@@ -1,0 +1,74 @@
+! upload datasets 
+
+
+		use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_experiments/internship/ccn_exp/rcp85/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_experiments/internship/ccn_exp/rcp85-25/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_experiments/internship/ccn_exp/rcp85-50/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_experiments/internship/ccn_exp/rcp85-85/tavg.01955.01.01.nc
+
+		use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_experiments/internship/emis_exp/rcp85/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_experiments/internship/emis_exp/rcp85-25/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_experiments/internship/emis_exp/rcp85-50/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic/chiara_experiments/internship/emis_exp/rcp85-85/tavg.01955.01.01.nc
+
+
+! define variables 
+
+
+		let ophyto_rcp85 = O_phytnpp[d=1, z=@ave, l=29]
+		let ophyto_rcp8525 = O_phytnpp[d=2, z=@ave, l=29]
+		let ophyto_rcp8550 = O_phytnpp[d=3, z=@ave, l=29]
+		let ophyto_rcp8585 = O_phytnpp[d=4, z=@ave, l=29]
+
+		let ophyto_cng_25 = ophyto_rcp85 - ophyto_rcp8525
+		let ophyto_cng_50 = ophyto_rcp85 - ophyto_rcp8550
+		let ophyto_cng_85 = ophyto_rcp85 - ophyto_rcp8585
+
+		let emis_ophyto_rcp85 = O_phytnpp[d=5, z=@ave, l=29]
+		let emis_ophyto_rcp8525 = O_phytnpp[d=6, z=@ave, l=29]
+		let emis_ophyto_rcp8550 = O_phytnpp[d=7, z=@ave, l=29]
+		let emis_ophyto_rcp8585 = O_phytnpp[d=8, z=@ave, l=29]
+
+		let emis_ophyto_cng_25 = emis_ophyto_rcp85 - emis_ophyto_rcp8525
+		let emis_ophyto_cng_50 = emis_ophyto_rcp85 - emis_ophyto_rcp8550
+		let emis_ophyto_cng_85 = emis_ophyto_rcp85 - emis_ophyto_rcp8585
+
+		let comp_25 = ophyto_cng_25 - emis_ophyto_cng_25
+		let comp_50 = ophyto_cng_50 - emis_ophyto_cng_50
+		let comp_85 = ophyto_cng_85 - emis_ophyto_cng_85
+
+
+! set plot routine
+
+
+		set windows/new
+		set text/font='Arial'
+		set text/isiz=4
+		go portrait1x2.jnl
+
+
+		define view/xlimits=0.1,0.85/ylimits=0.6,1 tl
+		define view/xlimits=0.1,0.85/ylimits=0.3,0.7 ml
+		define view/xlimits=0.1,0.85/ylimits=0,0.4 bl
+		
+
+		set view tl
+		shade/nolabel/pal= cmocean_tempo/levels="(-inf)(0,0.01,0.001)(inf)" comp_25
+		go land
+		label/nouser 4,3.4,1,0,0.11 "phyto - RCPmed"
+		label 0,105,0,0,0.12 "(a)"
+
+		set view ml
+		shade/nolabel/pal= cmocean_tempo/levels="(-inf)(0,0.01,0.001)(inf)" comp_50
+		go land
+		label/nouser 4,3.4,1,0,0.11 "phyto - RCPlow"
+		label 0,105,0,0,0.12 "(b)"
+
+		set view bl
+		shade/nolabel/pal= cmocean_tempo/levels="(-inf)(0,0.01,0.001)(inf)" comp_85
+		go land
+		label/nouser 4,3.4,1,0,0.11 "phyto - RCPvl"
+		label 0,105,0,0,0.12 "(c)"
+
+
+frame/file = "/Users/chiaraciscato/Desktop/geomar/UVic/chiara_experiments/UVICsimulations/chiara_runs/internship_experiments/comparison/comparison_ophyto.pdf"
