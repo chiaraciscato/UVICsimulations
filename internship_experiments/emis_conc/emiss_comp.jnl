@@ -1,0 +1,116 @@
+! upload datasets
+
+
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/conc_comp/rcp85/tsi.01951.01.01.nc				! RCP 8.5
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/conc_comp/rcp85-25/tsi.01951.01.01.nc				! RCPmed
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/conc_comp/rcp85-50/tsi.01951.01.01.nc 				! RCPlow
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/conc_comp/rcp85-85/tsi.01951.01.01.nc 				! RCPvl
+
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/emis_comp/rcp85/tsi.01951.01.01.nc				! RCP 8.5
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/emis_comp/rcp85-25/tsi.01951.01.01.nc				! RCPmed
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/emis_comp/rcp85-50/tsi.01951.01.01.nc 				! RCPlow
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/emis_comp/rcp85-85/tsi.01951.01.01.nc 				! RCPvl
+
+
+
+! assign variables
+
+	let diag_85 = F_co2diag[d=1, l=0:149]
+	let diag_8525 = F_co2diag[d=2, l=0:149]
+	let diag_8550 = F_co2diag[d=3, l=0:149]
+	let diag_8585 = F_co2diag[d=4, l=0:149]
+
+	let pres_85 = F_co2emit[d=5, l=0:149]
+	let pres_8525 = F_co2emit[d=6, l=0:149]
+	let pres_8550 = F_co2emit[d=7, l=0:149]
+	let pres_8585 = F_co2emit[d=8, l=0:149]
+
+	let diff_85 = diag_85 - pres_85 
+	let diff_8525 = diag_8525 - pres_8525
+	let diff_8550 = diag_8550 - pres_8550
+	let diff_8585 = diag_8585 - pres_8585
+
+	let conc_85 = A_co2[d=5, l=0:149]
+	let conc_8525 = A_co2[d=6, l=0:149]
+	let conc_8550 = A_co2[d=7, l=0:149]
+	let conc_8585 = A_co2[d=8, l=0:149]
+
+! plot routine
+
+
+	cancel windows/all
+	set windows/new
+	set text/font='Arial'
+	set text/isiz=2
+	go portrait1x2.jnl
+
+	define view/xlimits=0.2,0.8/ylimits=0.63,1 t
+	define view/xlimits=0.2,0.8/ylimits=0.315,0.685 m
+	define view/xlimits=0.2,0.8/ylimits=0,0.37 b
+
+
+! plot figure
+
+	set view t
+	plot/nolabel/color=(89,26,26)/vlimit=0:30:5/hlimit=1950:2101:25/thick=1 pres_85
+	plot/nolabel/overlay/color=(100,68,0)/thick=1 pres_8525
+	plot/nolabel/overlay/color=(35,92,45)/thick=1 pres_8550
+	plot/nolabel/overlay/color=(22,97,97)/thick=1 pres_8585
+
+	label/nouser 2.4,3.4,0,0,0.12 "Prescribed carbon emissions"
+ 	label/nouser -1.2,1.5,0,90,0.11 "[Pg yr <sup>-1</sup>]"
+	label/nouser 2.8,-0.8,4,0,0.11 "[year]"
+	label 90000,27,0,0,0.12 "(a)"
+	
+	set text/font='Arial'/color=(89,26,26)
+	label/nouser 0.2,2.2,-1,0,0.09 RCP 8.5
+	
+	set text/font='Arial'/color=(100,68,0)
+	label/nouser 0.2,1.9,-1,0,0.09 RCPmed
+	
+	set text/font='Arial'/color=(35,92,45)
+	label/nouser 0.2,1.6,-1,0,0.09 RCPlow
+	
+	set text/font='Arial'/color=(22,97,97)
+	label/nouser 0.2,1.3,-1,0,0.09 RCPvl
+
+	set text/font='Arial'/color=black
+
+
+	set view m
+	plot/nolabel/color=(89,26,26)/vlimit=300:950:150/hlimit=1950:2101:25/thick=1 conc_85
+	plot/nolabel/overlay/color=(100,68,0)/thick=1 conc_8525
+	plot/nolabel/overlay/color=(35,92,45)/thick=1 conc_8550
+	plot/nolabel/overlay/color=(22,97,97)/thick=1 conc_8585
+
+	label/nouser 2.4,3.4,0,0,0.12 "Atmospheric CO<sub>2</sub> concentration"
+ 	label/nouser -1.2,1.5,0,90,0.11 "[ppm]"
+	label/nouser 2.8,-0.8,4,0,0.11 "[year]"
+	label 90000,880,0,0,0.12 "(b)"
+
+	set text/font='Arial'/color=black
+
+
+	set view b
+	plot/nolabel/color=(89,26,26)/vlimit=-2:0.3:0.5/hlimit=1950:2101:25/thick=1 diff_85
+	plot/nolabel/overlay/color=(100,68,0)/thick=1 diff_8525
+	plot/nolabel/overlay/color=(35,92,45)/thick=1 diff_8550
+	plot/nolabel/overlay/color=(22,97,97)/thick=1 diff_8585
+	plot/nolabel/vs/over/line=1 {1950,2100},{0,0}
+
+	label/nouser 2.4,3.4,0,0,0.12 "Diagn. - prescr. emissions"
+ 	label/nouser -1.2,1.5,0,90,0.11 "[Pg yr <sup>-1</sup>]"
+	label/nouser 2.8,-0.8,4,0,0.11 "[year]"
+	label 1250000,-1.8,0,0,0.12 "(c)"
+
+	set text/font='Arial'/color=black
+
+! save figure
+
+
+	frame/file = "/Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVICsimulations/internship_experiments/emis_conc/emis_comp.pdf"
+
+	frame /file="/Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVICsimulations/internship_experiments/emis_conc/emis_comp.png" /ypixels=2250
+
+cancel data/all
+cancel windows/all

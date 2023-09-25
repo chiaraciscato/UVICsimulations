@@ -1,0 +1,236 @@
+! upload datasets
+
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/conc_comp/rcp85/tsi.01951.01.01.nc			! RCP 8.5
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/conc_comp/rcp85-25/tsi.01951.01.01.nc  			! RCP 8.5 - 25%
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/conc_comp/rcp85-50/tsi.01951.01.01.nc 			! RCP 8.5 - 50%
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/conc_comp/rcp85-85/tsi.01951.01.01.nc			! RCP 8.5 - 85%
+
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/emis_comp/rcp85/tsi.01951.01.01.nc			! RCP 8.5
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/emis_comp/rcp85-25/tsi.01951.01.01.nc  			! RCP 8.5 - 25%
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/emis_comp/rcp85-50/tsi.01951.01.01.nc 			! RCP 8.5 - 50%
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/emis_comp/rcp85-85/tsi.01951.01.01.nc			! RCP 8.5 - 85%
+
+
+! assign variables
+
+! sea surface temperature
+
+	let conc_otemp_rcp85 = A_SATO[d=1, l=0:149]
+	let conc_otemp_rcp8525 = A_SATO[d=2, l=0:149]
+	let conc_otemp_rcp8550 = A_SATO[d=3, l=0:149]
+	let conc_otemp_rcp8585 = A_SATO[d=4, l=0:149]
+
+	let emis_otemp_rcp85 = A_SATO[d=5, l=0:149]
+	let emis_otemp_rcp8525 = A_SATO[d=6, l=0:149]
+	let emis_otemp_rcp8550 = A_SATO[d=7, l=0:149]
+	let emis_otemp_rcp8585 = A_SATO[d=8, l=0:149]
+
+	let cng_otemp_25 = conc_otemp_rcp8525 - emis_otemp_rcp8525
+	let cng_otemp_50 = conc_otemp_rcp8550 - emis_otemp_rcp8550
+	let cng_otemp_85 = conc_otemp_rcp8585 - emis_otemp_rcp8585
+
+! land surface temperature
+
+	let conc_ltemp_rcp85 = A_SATL[d=1, l=0:149]
+	let conc_ltemp_rcp8525 = A_SATL[d=2, l=0:149]
+	let conc_ltemp_rcp8550 = A_SATL[d=3, l=0:149]
+	let conc_ltemp_rcp8585 = A_SATL[d=4, l=0:149]
+
+	let emis_ltemp_rcp85 = A_SATL[d=5, l=0:149]
+	let emis_ltemp_rcp8525 = A_SATL[d=6, l=0:149]
+	let emis_ltemp_rcp8550 = A_SATL[d=7, l=0:149]
+	let emis_ltemp_rcp8585 = A_SATL[d=8, l=0:149]
+
+	let cng_ltemp = conc_ltemp_rcp85 - emis_ltemp_rcp85
+	let cng_ltemp_25 = conc_ltemp_rcp8525 - emis_ltemp_rcp8525
+	let cng_ltemp_50 = conc_ltemp_rcp8550 - emis_ltemp_rcp8550
+	let cng_ltemp_85 = conc_ltemp_rcp8585 - emis_ltemp_rcp8585
+
+! air carbon
+
+	let conc_lcarb_rcp85 = L_TOTCARB[d=1, l=0:149]
+	let conc_lcarb_rcp8525 = L_TOTCARB[d=2, l=0:149]
+	let conc_lcarb_rcp8550 = L_TOTCARB[d=3, l=0:149]
+	let conc_lcarb_rcp8585 = L_TOTCARB[d=4, l=0:149]
+
+	let emis_lcarb_rcp85 = L_TOTCARB[d=5, l=0:149]
+	let emis_lcarb_rcp8525 = L_TOTCARB[d=6, l=0:149]
+	let emis_lcarb_rcp8550 = L_TOTCARB[d=7, l=0:149]
+	let emis_lcarb_rcp8585 = L_TOTCARB[d=8, l=0:149]
+
+	let cng_lcarb = conc_lcarb_rcp85 - emis_lcarb_rcp85
+	let cng_lcarb_25 = conc_lcarb_rcp8525 - emis_lcarb_rcp8525
+	let cng_lcarb_50 = conc_lcarb_rcp8550 - emis_lcarb_rcp8550
+	let cng_lcarb_85 = conc_lcarb_rcp8585 - emis_lcarb_rcp8585
+
+! ocean carbon
+
+	let conc_ocarb_rcp85 = O_TOTCARB[d=1, l=0:149]
+	let conc_ocarb_rcp8525 = O_TOTCARB[d=2, l=0:149]
+	let conc_ocarb_rcp8550 = O_TOTCARB[d=3, l=0:149]
+	let conc_ocarb_rcp8585 = O_TOTCARB[d=4, l=0:149]
+
+	let emis_ocarb_rcp85 = O_TOTCARB[d=5, l=0:149]
+	let emis_ocarb_rcp8525 = O_TOTCARB[d=6, l=0:149]
+	let emis_ocarb_rcp8550 = O_TOTCARB[d=7, l=0:149]
+	let emis_ocarb_rcp8585 = O_TOTCARB[d=8, l=0:149]
+
+	let cng_ocarb_25 = conc_ocarb_rcp8525 - emis_ocarb_rcp8525
+	let cng_ocarb_50 = conc_ocarb_rcp8550 - emis_ocarb_rcp8550
+	let cng_ocarb_85 = conc_ocarb_rcp8585 - emis_ocarb_rcp8585
+
+
+! land flux
+
+	let conc_lflux_rcp85 = F_carba2l[d=1, l=0:149]
+	let conc_lflux_rcp8525 = F_carba2l[d=2, l=0:149]
+	let conc_lflux_rcp8550 = F_carba2l[d=3, l=0:149]
+	let conc_lflux_rcp8585 = F_carba2l[d=4, l=0:149]
+
+	let emis_lflux_rcp85 = F_carba2l[d=5, l=0:149]
+	let emis_lflux_rcp8525 = F_carba2l[d=6, l=0:149]
+	let emis_lflux_rcp8550 = F_carba2l[d=7, l=0:149]
+	let emis_lflux_rcp8585 = F_carba2l[d=8, l=0:149]
+
+	let cng_lflux_25 = conc_lflux_rcp8525 - emis_lflux_rcp8525
+	let cng_lflux_50 = conc_lflux_rcp8550 - emis_lflux_rcp8550
+	let cng_lflux_85 = conc_lflux_rcp8585 - emis_lflux_rcp8585
+
+! ocean flux
+
+	let conc_oflux_rcp85 = F_carba2o[d=1, l=0:149]
+	let conc_oflux_rcp8525 = F_carba2o[d=2, l=0:149]
+	let conc_oflux_rcp8550 = F_carba2o[d=3, l=0:149]
+	let conc_oflux_rcp8585 = F_carba2o[d=4, l=0:149]
+
+	let emis_oflux_rcp85 = F_carba2o[d=5, l=0:149]
+	let emis_oflux_rcp8525 = F_carba2o[d=6, l=0:149]
+	let emis_oflux_rcp8550 = F_carba2o[d=7, l=0:149]
+	let emis_oflux_rcp8585 = F_carba2o[d=8, l=0:149]
+
+	let cng_oflux_25 = conc_oflux_rcp8525 - emis_oflux_rcp8525
+	let cng_oflux_50 = conc_oflux_rcp8550 - emis_oflux_rcp8550
+	let cng_oflux_85 = conc_oflux_rcp8585 - emis_oflux_rcp8585
+
+
+! plot routine
+
+
+	cancel windows/all
+	set windows/new
+	set text/font='Arial'
+	set text/isiz=2
+	go portrait1x2.jnl
+	
+
+	define view/xlimits=0.06,0.59/ylimits=0.6,1 ul
+	define view/xlimits=0.47,1/ylimits=0.6,1 ur
+	define view/xlimits=0.06,0.59/ylimits=0.3,0.7 ml
+	define view/xlimits=0.47,1/ylimits=0.3,0.7 mr
+	define view/xlimits=0.06,0.59/ylimits=0,0.4 ll
+	define view/xlimits=0.47,1/ylimits=0,0.4 lr
+
+! plot figure
+
+set view ul
+
+	ppl txlabp 0,0
+	ppl axlabp -1,-1
+
+	plot/nolabel/color=(100,68,0)/vlimits=-0.15:0.15:0.05/hlimits=2000:2101:25/thick=1 cng_lflux_25
+	plot/nolabel/overlay/color=(35,92,45)/thick=1 cng_lflux_50
+	plot/nolabel/overlay/color=(22,97,97)/thick=1 cng_lflux_85
+	plot/nolabel/vs/over/line=1 {1950,2100},{0,0}
+
+	label/nouser 2.1,3.8,0,0,0.12 "Carbon flux into the land"
+	label/nouser -1.2,1.8,0,90,0.11 "[Pg yr <sup>-1</sup>]"
+
+	label 1200000,0.05,0,0,0.12 "(a)"
+	
+	set text/font='Arial'/color=(100,68,0)
+	label/nouser 0.2,3,-1,0,0.11 RCPmed
+	
+	set text/font='Arial'/color=(35,92,45)
+	label/nouser 0.2,2.7,-1,0,0.11 RCPlow
+	
+	set text/font='Arial'/color= (22,97,97)
+	label/nouser 0.2,2.4,-1,0,0.11 RCPvl
+	
+	set text/font='Arial'/color=black
+
+	set view ur
+
+	ppl axlabp -1,0
+
+
+	plot/nolabel/color=(100,68,0)/vlimits=-0.15:0.15:0.05/hlimits=2000:2101:25/thick=1 cng_oflux_25
+	plot/nolabel/overlay/color=(35,92,45)/thick=1 cng_oflux_50
+	plot/nolabel/overlay/color=(22,97,97)/thick=1 cng_oflux_85
+	plot/nolabel/vs/over/line=1 {1950,2100},{0,0}
+	
+	label/nouser 2.1,3.8,0,0,0.12 "Carbon flux into the ocean"
+	label 1200000,0.05,0,0,0.12 "(b)"
+
+	set view ml
+
+	ppl txlabp 0,0
+	ppl axlabp -1,-1
+
+	ppl plot
+
+	plot/nolabel/color=(100,68,0)/vlimits=0:10:2/hlimits=2000:2101:20/thick=1 cng_lcarb_25
+	plot/nolabel/overlay/color=(35,92,45)/thick=1 cng_lcarb_50
+	plot/nolabel/overlay/color=(22,97,97)/thick=1 cng_lcarb_85
+	plot/nolabel/vs/over/line=1 {1950,2100},{0,0}
+	label/nouser -1.3,1.8,0,90,0.11 [Pg]
+	label/nouser 2.1,3.8,0,0,0.12 "Land carbon content"
+	label 1200000,3,0,0,0.12 "(c)"
+
+	set view mr
+
+	ppl axlabp -1,0
+
+	plot/nolabel/color=(100,68,0)/vlimits=0:10:2/hlimits=2000:2101:20/thick=1 cng_ocarb_25
+	plot/nolabel/overlay/color=(35,92,45)/thick=1 cng_ocarb_50
+	plot/nolabel/overlay/color=(22,97,97)/thick=1 cng_ocarb_85
+	plot/nolabel/vs/over/line=1 {1950,2100},{0,0}
+	label/nouser 2.1,3.8,0,0,0.12 "Ocean carbon content"
+	label 1200000,3,0,0,0.12 "(d)"
+
+	set view ll
+
+	ppl txlabp -1,-1
+	ppl axlabp -1,-1
+
+	plot/nolabel/color=(100,68,0)/vlimits=-0.02:0.065:0.02/hlimits=2000:2101:20/thick=1 cng_ltemp_25
+	plot/nolabel/overlay/color=(35,92,45)/thick=1 cng_ltemp_50
+	plot/nolabel/overlay/color=(22,97,97)/thick=1 cng_ltemp_85
+	plot/nolabel/vs/over/line=1 {1950,2100},{0,0}
+	label/nouser -1.3,1.8,0,90,0.11 [°C]
+
+	label/nouser 2.1,3.8,0,0,0.12 "Land surface temperature"
+	label/nouser 2.5,-0.8,4,0,0.11 "[year]"
+	label 1200000,0.05,0,0,0.12 "(e)"
+
+	set view lr
+
+	ppl axlabp 0,0
+
+	plot/nolabel/color=(100,68,0)/vlimits=-0.02:0.065:0.02/hlimits=2000:2101:20/thick=1 cng_otemp_25
+	plot/nolabel/overlay/color=(35,92,45)/thick=1 cng_otemp_50
+	plot/nolabel/overlay/color=(22,97,97)/thick=1 cng_otemp_85
+	plot/nolabel/vs/over/line=1 {1950,2100},{0,0}
+	label/nouser 2.1,3.8,0,0,0.12 "Ocean surface temperature"
+	label/nouser 2.5,-0.8,4,0,0.11 "[year]"
+	label 1200000,0.05,0,0,0.12 "(f)"
+
+
+! save figure
+
+
+	frame/file = "/Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVICsimulations/internship_experiments/emis_conc/final_tsi.pdf"
+
+	frame /file="/Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVICsimulations/internship_experiments/emis_conc/final_tsi.png" /ypixels=2250
+
+cancel windows/all
+cancel data/all

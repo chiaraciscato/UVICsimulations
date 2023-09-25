@@ -1,0 +1,79 @@
+! upload datasets 
+
+
+		use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/conc_comp/rcp85/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/conc_comp/rcp85-25/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/conc_comp/rcp85-50/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/conc_comp/rcp85-85/tavg.01955.01.01.nc
+
+		use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/emis_comp/rcp85/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/emis_comp/rcp85-25/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/emis_comp/rcp85-50/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/emis_comp/rcp85-85/tavg.01955.01.01.nc
+
+
+! define variables 
+
+		let conc_carb_rcp85 = L_SOILCARB[d=1, z=@ave, l=30] + L_VEGCARB[d=1, z=@ave, l=30]
+		let conc_carb_rcp8525 = L_SOILCARB[d=2, z=@ave, l=30] + L_VEGCARB[d=2, z=@ave, l=30]
+		let conc_carb_rcp8550 = L_SOILCARB[d=3, z=@ave, l=30] + L_VEGCARB[d=3, z=@ave, l=30]
+		let conc_carb_rcp8585 = L_SOILCARB[d=4, z=@ave, l=30] + L_VEGCARB[d=4, z=@ave, l=30]
+
+		let conc_carb_25 = conc_carb_rcp85 - conc_carb_rcp8525
+		let conc_carb_50 = conc_carb_rcp85 - conc_carb_rcp8550
+		let conc_carb_85 = conc_carb_rcp85 - conc_carb_rcp8585
+
+		let emis_carb_rcp85 = L_SOILCARB[d=5, z=@ave, l=30] + L_VEGCARB[d=5, z=@ave, l=30]
+		let emis_carb_rcp8525 = L_SOILCARB[d=6, z=@ave, l=30] + L_VEGCARB[d=6, z=@ave, l=30]
+		let emis_carb_rcp8550 = L_SOILCARB[d=7, z=@ave, l=30] + L_VEGCARB[d=7, z=@ave, l=30]
+		let emis_carb_rcp8585 = L_SOILCARB[d=8, z=@ave, l=30] + L_VEGCARB[d=8, z=@ave, l=30]
+
+		let emis_carb_25 = emis_carb_rcp85 - emis_carb_rcp8525
+		let emis_carb_50 = emis_carb_rcp85 - emis_carb_rcp8550
+		let emis_carb_85 = emis_carb_rcp85 - emis_carb_rcp8585
+
+		let comp_25 = conc_carb_25 - emis_carb_25
+		let comp_50 = conc_carb_50 - emis_carb_50
+		let comp_85 = conc_carb_85 - emis_carb_85
+
+
+! set plot routine
+
+
+		set windows/new
+		set text/font='verdana'
+		set text/isiz=2
+		go portrait1x2.jnl
+
+
+		define view/xlimits=0.1,0.85/ylimits=0.6,1 tl
+		define view/xlimits=0.1,0.85/ylimits=0.3,0.7 ml
+		define view/xlimits=0.1,0.85/ylimits=0,0.4 bl
+		
+
+		set view tl
+		shade/nolabel/pal= cmocean_delta/levels="(-inf)(-0.1,0.1,0.02)(inf)" comp_25
+		go land
+		label/nouser 4.5,3.4,1,0,0.12 "RCPmed - Land carbon"
+		label 0,105,0,0,0.12 "(a)"
+		label 435,0,0,90,0.1 "[kg m<sup>-2</sup>]"
+
+		set view ml
+		shade/nolabel/pal= cmocean_delta/levels="(-inf)(-0.1,0.1,0.02)(inf)" comp_50
+		go land
+		label/nouser 4.5,3.4,1,0,0.12 "RCPlow - Land carbon"
+		label 0,105,0,0,0.12 "(b)"
+		label 435,0,0,90,0.1 "[kg m<sup>-2</sup>]"
+
+		set view bl
+		shade/nolabel/pal= cmocean_delta/levels="(-inf)(-0.1,0.1,0.02)(inf)" comp_85
+		go land
+		label/nouser 4.4,3.4,1,0,0.12 "RCPvl - Land carbon"
+		label 0,105,0,0,0.12 "(c)"
+		label 435,0,0,90,0.1 "[kg m<sup>-2</sup>]"
+
+
+frame/file = "/Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVICsimulations/internship_experiments/emis_conc/comp_lcarb.pdf"
+
+cancel windows/all
+cancel data/all

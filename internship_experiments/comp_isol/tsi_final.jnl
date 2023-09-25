@@ -1,0 +1,121 @@
+! upload datasets
+
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/emis_isol/no_NPZD/tsi.01951.01.01.nc ! noOCEAN
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/emis_isol/no_Veg/tsi.01951.01.01.nc ! noVEGETATION
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/emis_isol/no_NPZDVeg/tsi.01951.01.01.nc ! noOCEVEG
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/emis_comp/rcp85-85/tsi.01951.01.01.nc ! RCPvl
+
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/conc_isol/no_NPZD/tsi.01951.01.01.nc ! noOCEAN
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/conc_isol/no_Veg/tsi.01951.01.01.nc ! noVEGETATION
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/conc_isol/no_NPZDVeg/tsi.01951.01.01.nc ! noOCEVEG
+	use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/conc_comp/rcp85-85/tsi.01951.01.01.nc ! RCPvl
+
+
+! assign variables
+
+	let co2_noocean = A_CO2[d=1]
+	let co2_noveg = A_CO2[d=2]
+	let co2_noboth = A_CO2[d=3]
+	let co2_rcpvl = A_CO2[d=4]
+	let co2_vlcomb = A_CO2[d=1] + A_CO2[d=2] - A_CO2[d=3]
+
+	let co2d_noocean = F_CO2DIAG[d=5]
+	let co2d_noveg = F_CO2DIAG[d=6]
+	let co2d_noboth = F_CO2DIAG[d=7]
+	let co2d_rcpvl = F_CO2DIAG[d=8]
+	let co2d_vlcomb = F_CO2DIAG[d=5] + F_CO2DIAG[d=6] - F_CO2DIAG[d=7]
+
+! plot routine
+
+
+	cancel windows/all
+	set windows/new
+	set text/font='Arial'
+	set text/isiz=2
+	go landscape1x2.jnl
+	
+
+	define view/xlimits=0.1,0.5/ylimits=0.48,0.98 ul
+	define view/xlimits=0.5,0.9/ylimits=0.48,0.98 ur
+	define view/xlimits=0.1,0.5/ylimits=0.08,0.58 ml
+	define view/xlimits=0.5,0.9/ylimits=0.08,0.58 mr
+
+
+! plot figure
+
+	set view ul
+
+	plot/nolabel/color=(22,97,97)/vlimits=-5:15:5/hlimits=1950:2101:20/thick=1 F_CO2EMIT[d=4]
+	label/nouser -1.1,1.8,0,90,0.11 [Pg yr<sup>-1</sup>]
+
+	label/nouser 2.1,3.8,0,0,0.12 "Prescribed CO<sub>2</sub> emissions"
+	label 1200000,-4,0,0,0.12 "(a)"
+	
+	set text/font='Arial'/color=black
+
+
+	set view ur
+
+	plot/nolabel/color=(91,22,22)/vlimits=300:900:100/hlimits=1950:2101:20/thick=1 co2_noocean
+	plot/nolabel/overlay/color=(96,80,26)/thick=1 co2_noveg
+	plot/nolabel/overlay/color=(26,84,38)/thick=1 co2_noboth
+	plot/nolabel/overlay/color=(22,97,97)/thick=1 co2_rcpvl
+	plot/nolabel/overlay/color=(26,44,84)/thick=1 co2_vlcomb
+	label/nouser -1.1,1.8,0,90,0.11 [ppm]
+
+	label/nouser 2.1,3.8,0,0,0.12 "Diagnosed atmospheric CO<sub>2</sub>"
+	label 1200000,330,0,0,0.12 "(b)"
+	
+	set text/font='Arial'/color=(91,22,22)
+	label/nouser 0.2,3,-1,0,0.09 noOCE
+	
+	set text/font='Arial'/color=(96,80,26)
+	label/nouser 0.2,2.8,-1,0,0.09 noVEG
+
+	set text/font='Arial'/color=(26,84,38)
+	label/nouser 0.2,2.6,-1,0,0.09 noOV
+
+	set text/font='Arial'/color=(22,97,97)
+	label/nouser 0.2,2.4,-1,0,0.09 RCPvl
+
+	set text/font='Arial'/color=(26,44,84)
+	label/nouser 0.2,2.2,-1,0,0.09 RCPcomb
+	
+	set text/font='Arial'/color=black
+
+
+	set view ml
+
+	plot/nolabel/color=(22,97,97)/vlimits=300:900:100/hlimits=1950:2101:20/thick=1 A_CO2[d=4]
+	label/nouser -1.1,1.8,0,90,0.11 [ppm]
+
+	label/nouser 2.1,3.8,0,0,0.12 "Prescribed atmospheric CO<sub>2</sub>"
+	label 1200000,330,0,0,0.12 "(c)"
+	
+	set text/font='Arial'/color=black
+
+
+	set view mr
+
+	plot/nolabel/color=(91,22,22)/vlimits=-5:15:5/hlimits=1950:2101:20/thick=1 co2d_noocean
+	plot/nolabel/overlay/color=(96,80,26)/thick=1 co2d_noveg
+	plot/nolabel/overlay/color=(26,84,38)/thick=1 co2d_noboth
+	plot/nolabel/overlay/color=(22,97,97)/thick=1 co2d_rcpvl
+	plot/nolabel/overlay/color=(26,44,84)/thick=1 co2d_vlcomb
+
+	label/nouser 2.1,3.8,0,0,0.12 "Diagnosed CO<sub>2</sub> emissions"
+	label/nouser -1.1,1.8,0,90,0.11 [Pg yr<sup>-1</sup>]
+
+	label/nouser 2.1,3.8,0,0,0.12 ""
+	label 1200000,-4,0,0,0.12 "(d)"
+	
+	set text/font='Arial'/color=black
+
+
+! save figure
+
+
+	frame/file = "/Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVICsimulations/internship_experiments/comp_isol/tsi_final.pdf"
+
+cancel windows/all
+cancel data/all

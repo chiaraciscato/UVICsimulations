@@ -1,0 +1,77 @@
+! upload datasets 
+
+
+		use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/conc_comp/rcp85/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/conc_comp/rcp85-25/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/conc_comp/rcp85-50/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/conc_comp/rcp85-85/tavg.01955.01.01.nc
+
+		use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/emis_comp/rcp85/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/emis_comp/rcp85-25/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/emis_comp/rcp85-50/tavg.01955.01.01.nc
+		use /Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVicESM/internship/emis_comp/rcp85-85/tavg.01955.01.01.nc
+
+
+! define variables 
+
+
+		let ocarb_rcp85 = O_TOTCARB[d=1, z=@ave, l=30]
+		let ocarb_rcp8525 = O_TOTCARB[d=2, z=@ave, l=30]
+		let ocarb_rcp8550 = O_TOTCARB[d=3, z=@ave, l=30]
+		let ocarb_rcp8585 = O_TOTCARB[d=4, z=@ave, l=30]
+
+		let ocarb_cng_25 = ocarb_rcp85 - ocarb_rcp8525
+		let ocarb_cng_50 = ocarb_rcp85 - ocarb_rcp8550
+		let ocarb_cng_85 = ocarb_rcp85 - ocarb_rcp8585
+
+		let emis_ocarb_rcp85 = O_TOTCARB[d=5, z=@ave, l=30]
+		let emis_ocarb_rcp8525 = O_TOTCARB[d=6, z=@ave, l=30]
+		let emis_ocarb_rcp8550 = O_TOTCARB[d=7, z=@ave, l=30]
+		let emis_ocarb_rcp8585 = O_TOTCARB[d=8, z=@ave, l=30]
+
+		let emis_ocarb_cng_25 = emis_ocarb_rcp85 - emis_ocarb_rcp8525
+		let emis_ocarb_cng_50 = emis_ocarb_rcp85 - emis_ocarb_rcp8550
+		let emis_ocarb_cng_85 = emis_ocarb_rcp85 - emis_ocarb_rcp8585
+
+		let comp_25 = ocarb_cng_25 - emis_ocarb_cng_25
+		let comp_50 = ocarb_cng_50 - emis_ocarb_cng_50
+		let comp_85 = ocarb_cng_85 - emis_ocarb_cng_85
+
+
+! set plot routine
+
+
+		set windows/new
+		set text/font='verdana'
+		set text/isiz=2
+		go portrait1x2.jnl
+
+
+		define view/xlimits=0.1,0.85/ylimits=0.6,1 tl
+		define view/xlimits=0.1,0.85/ylimits=0.3,0.7 ml
+		define view/xlimits=0.1,0.85/ylimits=0,0.4 bl
+		
+
+		set view tl
+		shade/nolabel/pal= cmocean_curl/levels="(-inf)(-0.5e-03,0.5e-03,1e-04)(inf)" comp_25
+		go land
+		label/nouser 4.4,3.4,1,0,0.12 "RCPmed - Ocean carbon"
+		label 0,105,0,0,0.12 "(a)"
+		label 440,0,0,90,0.1 "[mol m<sup>-3</sup>]"
+
+		set view ml
+		shade/nolabel/pal= cmocean_curl/levels="(-inf)(-0.5e-03,0.5e-03,1e-04)(inf)" comp_50
+		go land
+		label/nouser 4.4,3.4,1,0,0.12 "RCPlow - Ocean carbon"
+		label 0,105,0,0,0.12 "(b)"
+		label 440,0,0,90,0.1 "[mol m<sup>-3</sup>]"
+
+		set view bl
+		shade/nolabel/pal= cmocean_curl/levels="(-inf)(-0.5e-03,0.5e-03,1e-04)(inf)" comp_85
+		go land
+		label/nouser 4.4,3.4,1,0,0.12 "RCPvl - Ocean carbon"
+		label 0,105,0,0,0.12 "(c)"
+ 		label 440,0,0,90,0.1 "[mol m<sup>-3</sup>]"
+
+
+frame/file = "/Users/chiaraciscato/Desktop/geomar/UVic_experiments/conc_v_emis/UVICsimulations/internship_experiments/emis_conc/comp_ocarb.pdf"
